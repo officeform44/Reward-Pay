@@ -1,0 +1,555 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reward Pay</title>
+<!-- Google Fonts for a modern, professional font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* Reset some default styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #ece9e6, #ffffff);
+    color: #222;
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  /* Animate fade-in for sections */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  h1, h2, h3 {
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    text-align: center;
+    color: #2d6a4f; /* dark green */
+    margin-top: 20px;
+  }
+
+  /* Container styles for sections */
+  .section {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-top: 20px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  /* Add hover effect for sections */
+  .section:hover {
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+  }
+
+  /* Heading styles */
+  .section h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    color: #2d6a4f;
+    text-align: center;
+  }
+
+  /* Form styles */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], select {
+  padding: 14px;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus, select:focus {
+  border-color: #2d6a4f;
+}
+
+button {
+  padding: 14px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #2d6a4f;
+  color: #fff;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+button:hover:enabled {
+  background-color: #276749;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Profile info styles */
+.profile-info {
+  background: #f0f4f8;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+  margin-top: 10px;
+}
+#coins {
+  font-size: 2em;
+  font-weight: 700;
+  color: #2d6a4f;
+}
+
+/* Timer and task display styles */
+#task-word {
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
+  margin: 15px 0;
+  color: #1d3557;
+  letter-spacing: 2px;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+}
+#timer {
+  font-size: 3em;
+  color: #e76f51; /* warm orange */
+  text-align: center;
+  margin: 10px 0;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+}
+#status {
+  text-align: center;
+  margin: 10px 0;
+  font-weight: 600;
+  min-height: 20px;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+
+/* Withdrawal section styles */
+.withdraw-section {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-top: 20px;
+}
+.withdraw-section h2 {
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.8em;
+  color: #2d6a4f;
+}
+label {
+  font-weight: 600;
+  margin-top: 10px;
+  display: block;
+}
+#amount {
+  margin-top: 8px;
+  padding: 12px;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s;
+}
+#amount:focus {
+  border-color: #2d6a4f;
+}
+#withdraw-message {
+  margin-top: 15px;
+  font-weight: 600;
+  color: #155724;
+  font-size: 1em;
+}
+h3 {
+  margin-top: 20px;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+/* Withdrawal history styles */
+.history {
+  margin-top: 20px;
+}
+.history h3 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.history-item {
+  border-bottom: 1px dashed #ccc;
+  padding: 10px 0;
+  font-size: 0.9em;
+  transition: background 0.3s;
+}
+.history-item:hover {
+  background-color: #eef0f1;
+}
+
+/* Scrollbar style for overflowing history */
+#history-list {
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER / AUTH -->
+<div class="section fade-in" id="auth-section">
+  <h1>Reward Pay</h1>
+  <!-- Sign Up -->
+  <div class="fade-in" style="margin-top:20px;">
+    <h2 style="text-align:center;">Sign Up</h2>
+    <form id="signup">
+      <input type="email" placeholder="Gmail" id="signup-email" required />
+      <input type="text" placeholder="Number" id="signup-number" required />
+      <input type="text" placeholder="Username (6-15 letters)" pattern="^[A-Za-z]{6,15}$" id="signup-username" required />
+      <input type="password" placeholder="Password" id="signup-password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+  <!-- Sign In -->
+  <div style="margin-top:20px;">
+    <h2 style="text-align:center;">Sign In</h2>
+    <form id="signin">
+      <input type="text" placeholder="Username" id="signin-username" required />
+      <input type="password" placeholder="Password" id="signin-password" required />
+      <button type="submit">Sign In</button>
+    </form>
+    <p id="signin-error" style="color:red; display:none; text-align:center;">Incorrect username or password, please try again.</p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="section fade-in" id="dashboard" style="display:none;">
+  <h1>Dashboard</h1>
+  
+  <!-- Profile -->
+  <div class="profile-info" id="profile-info">
+    <strong>Gmail:</strong> <span id="profile-gmail"></span><br />
+    <strong>Number:</strong> <span id="profile-number"></span><br />
+    <strong>Username:</strong> <span id="profile-username"></span><br />
+    <strong>Coins:</strong> <span id="coins">0</span>
+  </div>
+  
+  <!-- Typing Task -->
+  <div class="section" style="margin-top:20px;">
+    <h2 style="text-align:center;">Type the words quickly!</h2>
+    <div id="task-word">Loading...</div>
+    <div id="timer">4</div>
+    <input type="text" id="typing-input" placeholder="Type here..." />
+    <div id="status"></div>
+    <button id="submit-task" disabled>Submit</button>
+  </div>
+  
+  <!-- Withdrawal -->
+  <div class="section" style="margin-top:20px;">
+    <h2 style="text-align:center;">Withdrawal</h2>
+    <label for="method">Method:</label>
+    <select id="method">
+      <option value="Paypal">Paypal</option>
+      <option value="Maya">Maya</option>
+      <option value="Gcash">Gcash</option>
+      <option value="Jazzcash">Jazz cash</option>
+    </select>
+    <label for="amount">Select withdrawal amount (coins):</label>
+    <select id="amount">
+      <option value="900">900 coins = $80</option>
+      <option value="1500">1500 coins = $160</option>
+      <option value="2000">2000 coins = $200</option>
+      <option value="2500">2500 coins = $500</option>
+      <option value="3000">3000 coins = $600</option>
+    </select>
+    <label for="withdraw-gmail">Number or Gmail:</label>
+    <input type="text" id="withdraw-gmail" placeholder="Enter your Gmail or Number" />
+    <button id="withdraw-btn">Withdraw</button>
+    <div id="withdraw-message"></div>
+  </div>
+  
+  <!-- Withdrawal History -->
+  <div class="history" id="history-section">
+    <h3>Withdrawal History</h3>
+    <div id="history-list"></div>
+  </div>
+  
+  <p style="text-align:center; font-size:12px; margin-top:20px;">Your withdrawal will be processed within 1 to 3 days. Thank you for your patience.</p>
+</div>
+
+<!-- Scripts -->
+<script>
+  // --- Data & Variables ---
+  let users = {}; // username: {gmail, number, password, coins}
+  let currentUser = null;
+
+  const words = ["refrigerator", "cellphone", "computer", "keyboard", "monitor", "printer", "smartphone", "laptop", "battery", "charger", "mouse", "speaker", "camera", "microphone", "router", "television", "headphones", "notebook", "tablet"];
+
+  let usedWords = [];
+  let currentWord = "";
+  let timerInterval;
+  let timeLeft = 4;
+
+  // --- DOM Elements ---
+  const authSection = document.getElementById('auth-section');
+  const signupForm = document.getElementById('signup');
+  const signinForm = document.getElementById('signin');
+  const signinError = document.getElementById('signin-error');
+
+  const dashboard = document.getElementById('dashboard');
+
+  const profileGmail = document.getElementById('profile-gmail');
+  const profileNumber = document.getElementById('profile-number');
+  const profileUsername = document.getElementById('profile-username');
+  const coinsSpan = document.getElementById('coins');
+
+  const taskWordDiv = document.getElementById('task-word');
+  const timerDiv = document.getElementById('timer');
+  const typingInput = document.getElementById('typing-input');
+  const statusDiv = document.getElementById('status');
+  const submitBtn = document.getElementById('submit-task');
+
+  const amountSelect = document.getElementById('amount');
+  const withdrawMethod = document.getElementById('method');
+  const withdrawGmail = document.getElementById('withdraw-gmail');
+  const withdrawBtn = document.getElementById('withdraw-btn');
+  const withdrawMessage = document.getElementById('withdraw-message');
+
+  const historyList = document.getElementById('history-list');
+
+  // --- Utility Functions ---
+  function generateRandomWord() {
+    let remaining = words.filter(w => !usedWords.includes(w));
+    if (remaining.length === 0) {
+      usedWords = [];
+      remaining = words;
+    }
+    const index = Math.floor(Math.random() * remaining.length);
+    const word = remaining[index];
+    usedWords.push(word);
+    return word;
+  }
+
+  function startTimer() {
+    timeLeft = 4;
+    timerDiv.textContent = timeLeft;
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      timerDiv.textContent = timeLeft;
+      playTimerSound();
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        checkTyping(false);
+      }
+    }, 1000);
+  }
+
+  function playTimerSound() {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = ctx.createOscillator();
+    const gainNode = ctx.createGain();
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(440, ctx.currentTime);
+    gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
+    oscillator.connect(gainNode);
+    gainNode.connect(ctx.destination);
+    oscillator.start();
+    oscillator.stop(ctx.currentTime + 0.1);
+  }
+
+  // --- Sign Up ---
+  document.getElementById('signup').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const gmail = document.getElementById('signup-email').value.trim();
+    const number = document.getElementById('signup-number').value.trim();
+    const username = document.getElementById('signup-username').value.trim();
+    const password = document.getElementById('signup-password').value.trim();
+
+    if (users[username]) {
+      alert('Username already exists.');
+      return;
+    }
+
+    users[username] = {
+      gmail,
+      number,
+      password,
+      coins: 0
+    };
+    currentUser = username;
+    loadProfile();
+    showDashboard();
+  });
+
+  // --- Sign In ---
+  document.getElementById('signin').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = document.getElementById('signin-username').value.trim();
+    const password = document.getElementById('signin-password').value.trim();
+
+    if (users[username] && users[username].password === password) {
+      currentUser = username;
+      loadProfile();
+      showDashboard();
+      signinError.style.display = 'none';
+    } else {
+      signinError.style.display = 'block';
+    }
+  });
+
+  // --- Load Profile ---
+  function loadProfile() {
+    const user = users[currentUser];
+    profileGmail.textContent = user.gmail;
+    profileNumber.textContent = user.number;
+    profileUsername.textContent = currentUser;
+    document.getElementById('coins').textContent = user.coins;
+  }
+
+  // --- Show Dashboard ---
+function showDashboard() {
+  document.getElementById('auth-section').style.display = 'none';
+  dashboard.style.display = 'block';
+  startNewTask();
+}
+
+// --- Start New Task ---
+function startNewTask() {
+  statusDiv.textContent = '';
+  document.getElementById('typing-input').value = '';
+  submitBtn.disabled = true;
+  currentWord = generateRandomWord();
+  taskWordDiv.textContent = currentWord;
+  startTimer();
+
+  // Check input for correct match
+  typingInput.oninput = () => {
+    if (typingInput.value.trim() === currentWord) {
+      submitBtn.disabled = false;
+    } else {
+      submitBtn.disabled = true;
+    }
+  };
+}
+
+// --- Check Typing ---
+function checkTyping(auto = true) {
+  clearInterval(timerInterval);
+  const typedText = document.getElementById('typing-input').value.trim();
+  let coinsEarned = 0;
+
+  if (typedText === currentWord) {
+    const timeTaken = 4 - timeLeft;
+    if (timeTaken <= 1) {
+      coinsEarned = 5;
+    } else if (timeTaken === 2) {
+      coinsEarned = 10;
+    } else if (timeTaken === 3) {
+      coinsEarned = 15;
+    } else if (timeTaken === 4) {
+      coinsEarned = 20;
+    }
+    users[currentUser].coins += coinsEarned;
+    document.getElementById('coins').textContent = users[currentUser].coins;
+    statusDiv.textContent = `✅ Correct! +${coinsEarned} coins`;
+  } else {
+    statusDiv.textContent = '❌ Incorrect or time out!';
+  }
+
+  // Auto start new task after delay
+  setTimeout(() => {
+    startNewTask();
+  }, 1000);
+}
+
+// --- Submit task ---
+submitBtn.addEventListener('click', () => {
+  checkTyping();
+});
+
+// --- Withdrawal ---
+function updateWithdrawal() {
+  const userCoins = users[currentUser].coins;
+  const amount = parseInt(amountSelect.value);
+  const gmailOrNumber = document.getElementById('withdraw-gmail').value.trim();
+
+  if (!gmailOrNumber) {
+    alert('Please enter your Gmail or Number.');
+    return;
+  }
+
+  if (amount > userCoins) {
+    alert('Insufficient coins.');
+    return;
+  }
+
+  // Deduct coins
+  users[currentUser].coins -= amount;
+  document.getElementById('coins').textContent = users[currentUser].coins;
+
+  // Log withdrawal
+  const entry = document.createElement('div');
+  entry.className = 'history-item fade-in';
+  entry.innerHTML = `
+    <strong>Number/Gmail:</strong> ${gmailOrNumber}<br/>
+    <strong>Amount:</strong> ${amount} coins<br/>
+    <strong>Value:</strong> $${(amount/10).toFixed(2)}<br/>
+    <strong>Time:</strong> ${new Date().toLocaleString()}<br/>
+    <strong>Method:</strong> ${withdrawMethod.value}<br/>
+    <strong>Status:</strong> processing bank
+  `;
+  document.getElementById('history-list').prepend(entry); // latest on top
+
+  // Message
+  document.getElementById('withdraw-message').textContent = 'Your withdrawal will be processed as soon as possible.';
+  // Clear input
+  document.getElementById('withdraw-gmail').value = '';
+}
+
+// --- Event Listener for withdrawal ---
+document.getElementById('withdraw-btn').addEventListener('click', updateWithdrawal);
+
+// --- Initialize ---
+startNewTask();
+
+</script>
+</body>
+</html>
